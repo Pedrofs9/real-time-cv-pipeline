@@ -19,13 +19,23 @@ back over WebSocket (watch mode) or returned as an annotated `.mp4` (download mo
 ## Quickstart
 
 **Prerequisites:** Docker + Docker Compose, NVIDIA GPU + `nvidia-container-toolkit` (optional — see CPU note below).
+**On Linux/macOS:**
 ```bash
-git clone <your-repo-url> && cd cv-pipeline
+git clone <your-repo-url> && cd real-time-cv-pipeline
 make run
 ```
 
 `make run` creates `.env` from `.env.example`, downloads `yolov8n.pt`, and starts
 all services.
+
+**On Windows:** (`make` is not available by default):
+```bash
+copy .env.example .env
+pip install ultralytics
+python scripts/download_yolov8.py
+docker compose up --build
+```
+
 
 | URL | Service |
 |---|---|
@@ -61,7 +71,7 @@ celery -A workers.video_tasks worker --pool=solo --loglevel=info
 
 ## Project structure
 ```
-cv-pipeline/
+real-time-cv-pipeline/
 ├── api/
 │   └── app.py                  # FastAPI app — all endpoints
 ├── core/
