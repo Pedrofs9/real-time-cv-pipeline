@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Pipeline Dashboard</title>
+    <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Real-Time CV Pipeline</h1>
+            <p>Computer vision for traffic monitoring</p>
+            <div class="status-badge" id="api-status">Checking API...</div>
+        </header>
+
+        <div class="main-panel">
+            <!-- Left Panel: Controls -->
+            <div class="control-panel">
+                <h2>📤 Upload Media</h2>
+                
+                <div class="upload-section">
+                    <h3>Image Detection</h3>
+                    <div id="image-form">
+                        <input type="file" id="image-input" accept="image/*">
+                        <button id="image-submit">Process Image</button>
+                    </div>
+                    <div class="metrics" id="image-metrics"></div>
+                </div>
+
+                <div class="upload-section">
+                    <h3>Video Processing</h3>
+                    <div id="video-form">
+                        <input type="file" id="video-input" accept="video/*">
+                        <button id="video-submit">Submit Video</button>
+                    </div>
+                    <div id="video-status"></div>
+
+                    <!-- Action buttons: hidden until video is submitted -->
+                    <div id="video-actions" style="display: none; margin-top: 16px;">
+                        <button id="watch-video-btn" class="btn-watch" disabled>
+                            ▶ Watch Video
+                        </button>
+                        <button id="download-video-btn" class="btn-download" disabled style="margin-top: 8px;">
+                            ⬇ Download Annotated Video
+                        </button>
+                        <p style="font-size: 11px; color: #718096; margin-top: 8px; text-align: center;">
+                            Watch: streams with detection overlay<br>
+                            Download: full annotated .mp4 with stats burned in
+                        </p>
+                    </div>
+
+                    <!-- Download progress (shown only during generation) -->
+                    <div id="download-progress-section" style="display: none; margin-top: 12px;">
+                        <div style="font-size: 13px; color: #4a5568; margin-bottom: 6px;">
+                            ⏳ Preparing annotated video: <span id="download-progress-pct">0%</span>
+                        </div>
+                        <div style="background: #edf2f7; border-radius: 4px; height: 8px;">
+                            <div id="download-progress-bar"
+                                style="background: #4299e1; height: 8px; border-radius: 4px; width: 0%; transition: width 0.4s ease;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jobs-section">
+                    <h3>📋 Active Jobs</h3>
+                    <div id="jobs-list">Loading jobs...</div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Visualization -->
+            <div class="visualization-panel">
+                <h2>🔍 Detection Results</h2>
+                <div class="canvas-container" id="canvas-container">
+                    <video id="video-player" controls></video>
+                    <canvas id="overlay-canvas"></canvas>
+                    <div class="loading" id="loading">Processing...</div>
+                    <!-- Custom fullscreen button replacing the native one -->
+                    <button id="fullscreen-btn" class="fullscreen-btn" title="Fullscreen">⛶</button>
+                </div>
+                <div class="stats-grid" id="stats">
+                    <div class="stat-card">
+                        <span class="stat-label">FPS</span>
+                        <span class="stat-value" id="fps">-</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Latency</span>
+                        <span class="stat-value" id="latency">-</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Detections</span>
+                        <span class="stat-value" id="detection-count">-</span>
+                    </div>
+                </div>
+
+                <!-- NEW: Traffic Density Card -->
+                <div class="traffic-card">
+                    <div class="traffic-header">
+                        <span class="traffic-label">🚦 TRAFFIC DENSITY</span>
+                        <span class="traffic-value" id="traffic-density">-</span>
+                    </div>
+                    <div class="traffic-bar-container">
+                        <div class="traffic-bar" id="traffic-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="traffic-status" id="traffic-status">-</div>
+                </div>
+
+                <!-- NEW: Vehicle Counts Grid -->
+                <div class="vehicle-counts">
+                    <h3>🚗 Vehicle Counts</h3>
+                    <div class="counts-grid">
+                        <div class="count-item">
+                            <span class="count-label">🚗 Cars</span>
+                            <span class="count-value" id="count-cars">0</span>
+                        </div>
+                        <div class="count-item">
+                            <span class="count-label">🏍️ Motorcycles</span>
+                            <span class="count-value" id="count-motorcycles">0</span>
+                        </div>
+                        <div class="count-item">
+                            <span class="count-label">🚚 Trucks</span>
+                            <span class="count-value" id="count-trucks">0</span>
+                        </div>
+                        <div class="count-item">
+                            <span class="count-label">🚌 Buses</span>
+                            <span class="count-value" id="count-buses">0</span>
+                        </div>
+                        <div class="count-item">
+                            <span class="count-label">🚶 Persons</span>
+                            <span class="count-value" id="count-persons">0</span>
+                        </div>
+                        <div class="count-item">
+                            <span class="count-label">🚲 Bicycles</span>
+                            <span class="count-value" id="count-bicycles">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="detections-list" class="detections-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/ui/script.js"></script>
+</body>
+</html>

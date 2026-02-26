@@ -1,0 +1,27 @@
+.PHONY: run stop clean setup logs rebuild
+
+run: setup
+	docker compose up --build
+
+stop:
+	docker compose down
+
+clean:
+	docker compose down -v
+
+setup:
+	@echo "→ Checking .env..."
+	@if [ ! -f .env ]; then \
+		cp .env.example .env; \
+		echo "  ✓ Created .env from .env.example"; \
+	else \
+		echo "  ✓ .env already exists"; \
+	fi
+	@echo "→ Downloading model weights..."
+	@python scripts/download_yolov8.py || python3 scripts/download_yolov8.py
+
+logs:
+	docker compose logs -f api worker
+
+rebuild:
+	docker compose up --build --force-recreate

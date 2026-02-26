@@ -1,0 +1,38 @@
+# API Layer
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+pydantic==2.4.2
+pydantic-settings==2.0.3
+python-dotenv==1.0.0
+
+# Image / Video Processing
+opencv-python==4.8.1.78
+numpy==1.24.3
+Pillow==10.1.0
+
+# Deep Learning / Object Detection
+torch==2.1.0
+torchvision==0.16.0
+ultralytics==8.0.200
+
+# Optional Performance / Model Optimization
+onnx==1.15.0
+onnxruntime==1.16.1
+
+# Async / Background Jobs
+celery==5.6.2
+redis==5.2.0
+websockets==11.0.3
+
+# Metrics / Observability
+prometheus-client==0.18.0
+psutil==5.9.8
+
+# Testing / Dev
+pytest==8.3.3
+pytest-asyncio==0.22.0
+
+httpx>=0.24.0
+nvidia-ml-py>=12.0.0
+psutil>=5.9.0
