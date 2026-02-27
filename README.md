@@ -19,22 +19,27 @@ back over WebSocket (watch mode) or returned as an annotated `.mp4` (download mo
 ## Quickstart
 
 **Prerequisites:** Docker + Docker Compose, NVIDIA GPU + `nvidia-container-toolkit` (optional — see CPU note below).
+
 **On Linux/macOS:**
 ```bash
-git clone <your-repo-url> && cd real-time-cv-pipeline
+git clone https://github.com/Pedrofs9/real-time-cv-pipeline.git && cd real-time-cv-pipeline
 make run
 ```
 
 `make run` creates `.env` from `.env.example`, downloads `yolov8n.pt`, and starts
 all services.
+Other make targets (macOS/Linux): `make stop`, `make clean`, `make logs`, `make rebuild`.
 
 **On Windows:** (`make` is not available by default):
-```bash
+```powershell
+git clone https://github.com/Pedrofs9/real-time-cv-pipeline.git
+cd real-time-cv-pipeline
 copy .env.example .env
-pip install ultralytics
 python scripts/download_yolov8.py
 docker compose up --build
 ```
+
+On Windows use `docker compose down` and `docker compose logs -f api worker` directly.
 
 
 | URL | Service |
