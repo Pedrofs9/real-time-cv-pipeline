@@ -4,10 +4,15 @@ Download YOLOv8 model weights into the local models/ directory.
 
 """
 
+import subprocess
+import sys
+
+# Ensure ultralytics is available before importing
+subprocess.check_call([sys.executable, "-m", "pip", "install", "ultralytics", "--quiet"])
+
 from ultralytics import YOLO
 from pathlib import Path
 import shutil
-import sys
 
 
 MODEL_NAME = "yolov8n.pt"
